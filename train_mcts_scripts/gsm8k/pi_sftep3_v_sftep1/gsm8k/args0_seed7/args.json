@@ -1,0 +1,1 @@
+{"temperature": 1.0, "max_length": 4, "max_action": 20, "pb_c_init": 3, "num_simulations": 5, "k_maj": 10, "num_mcts_aggregation": 1, "max_simulation": null, "max_token": 51200, "rollout_method": "mcts.rap", "select_by_prior": false, "reset_total_tree": false, "mcts_sample": false, "clear_tree": true, "prune_ratio": 0.7, "prune_value": null, "seed": 7}

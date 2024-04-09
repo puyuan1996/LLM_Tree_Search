@@ -164,6 +164,18 @@ if __name__ == "__main__":
     parser.add_argument("--env_name", type=str, default="gsm8k")
     parser.add_argument("--test", type=str2bool, default=True)
     parser.add_argument("--is_few_shot", type=str2bool, default=False)
+
+    # TODO
+    # parser.add_argument("--ct2_dir", type=str, default='/mnt/afs/niuyazhe/code/LLM_Tree_Search/llama-2-7b-hf-ct2')
+    # parser.add_argument("--critic_model_path", type=str, default='/mnt/afs/niuyazhe/data/llama-2-7b-hf')
+    # parser.add_argument("--tokenizer_path", type=str, default='/mnt/afs/niuyazhe/data/llama-2-7b-hf')
+    # parser.add_argument("--state_dict_path", type=str, default=None)
+    # parser.add_argument("--save_dir", type=str, default='/mnt/afs/niuyazhe/code/LLM_Tree_Search/pi_sftep3_v_sftep1')
+    # parser.add_argument("--env_name", type=str, default="gsm8k")
+    # # parser.add_argument("--env_name", type=str, default="game24")
+    # parser.add_argument("--test", type=str2bool, default=True)
+    # parser.add_argument("--is_few_shot", type=str2bool, default=False)
+    
     config = parser.parse_args()
 
     TREE_MAX_LENGTH = 4
@@ -216,6 +228,8 @@ if __name__ == "__main__":
 
     if use_llm_self_eval:
         tokenizer = AutoTokenizer.from_pretrained(config.tokenizer_path)
+        tokenizer.pad_token = tokenizer.eos_token  # TODO
+        # tokenizer.add_special_tokens({'pad_token': '[PAD]'})
         critic, _ = load_ct2_model(
             config.critic_model_path,
             device="cuda",
@@ -225,6 +239,9 @@ if __name__ == "__main__":
         policy_forward_value = partial(tot_value_fn, critic, tokenizer, config.env_name)
     else:
         tokenizer = AutoTokenizer.from_pretrained(config.tokenizer_path)
+        tokenizer.pad_token = tokenizer.eos_token  # TODO
+        # tokenizer.add_special_tokens({'pad_token': '[PAD]'})
+
         critic = load_critic_model(
             config.critic_model_path, config.state_dict_path, device
         )
@@ -610,6 +627,7 @@ if __name__ == "__main__":
         t0 = time.time()
         for i in (pbar := tqdm(range(len(test_ds)), disable=(local_rank != 0))):
             if i % world_size == local_rank:
+                # import pdb; pdb.set_trace()
                 results = test_problem(
                     args,
                     i,

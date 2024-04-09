@@ -40,7 +40,9 @@ if __name__ == "__main__":
     # )
 
     from transformers import AutoTokenizer
-    tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-2-7b-hf")
+    # tokenizer = AutoTokenizer.from_pretrained("meta-llama/Llama-2-7b-hf")
+    tokenizer = AutoTokenizer.from_pretrained("/mnt/afs/niuyazhe/data/llama-2-7b-hf")
+
 
     print("\n\n====== default sft dataset ============")
     from tsllm.envs import get_default_sft_data_builder, get_env_datasets

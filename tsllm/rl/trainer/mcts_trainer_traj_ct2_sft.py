@@ -181,7 +181,15 @@ class AccelerateMCTSTrainer(BaseMCTSTrainer):
             use_cache=False,
         )
 
+        # import pdb;pdb.set_trace()
+        # print(f'sftbatch.input_ids:{sftbatch.input_ids}')
+        # print(f'sftbatch.label:{sftbatch.label}')
+        # print(f'sftbatch.attn_mask:{sftbatch.attn_mask}')
+        
         policy_loss = sft_output.loss
+
+        # print(f'sft_output.loss:{sft_output.loss}')
+
         loss = self.config.train.sft_loss_coef * policy_loss
         stats["train/sft_policy_loss"] = policy_loss.detach().item()
 
