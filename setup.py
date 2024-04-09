@@ -14,5 +14,5 @@ setup(
     packages=setuptools.find_packages(),
     classifiers=[],
     keywords="large language model, tree search, reinforcement learning, value function",
-    python_requires='>=3.10',
+    # python_requires='>=3.10',
 )

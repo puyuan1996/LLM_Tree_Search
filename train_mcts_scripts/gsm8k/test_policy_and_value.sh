@@ -7,12 +7,26 @@ export TEST_NO_TERMINAL=1
 # export CUDA_VISIBLE_DEVICES=4,5,6,7
 
 
-CT2_DIR={your ct2 model cache}
-CRITIC_PATH={your critic model cache}
-torchrun --nproc_per_node=8 --master-port 29503 ../../tsllm/offline_rl/test_sft_and_v.py \
+# CT2_DIR={your ct2 model cache}
+# CRITIC_PATH={your critic model cache}
+
+
+CT2_DIR=/mnt/afs/niuyazhe/code/LLM_Tree_Search/llama-2-7b-hf-ct2
+CRITIC_PATH=/mnt/afs/niuyazhe/data/llama-2-7b-hf
+
+torchrun --nproc_per_node=1 --master-port 29503 ../../tsllm/offline_rl/test_sft_and_v.py \
     --ct2_dir $CT2_DIR \
     --critic_model_path $CRITIC_PATH \
     --tokenizer_path $CRITIC_PATH \
     --save_dir $1/pi_sftep3_v_sftep1 \
     --env_name gsm8k \
     --test True
+
+
+# torchrun --nproc_per_node=8 --master-port 29503 ../../tsllm/offline_rl/test_sft_and_v.py \
+#     --ct2_dir $CT2_DIR \
+#     --critic_model_path $CRITIC_PATH \
+#     --tokenizer_path $CRITIC_PATH \
+#     --save_dir $1/pi_sftep3_v_sftep1 \
+#     --env_name gsm8k \
+#     --test True

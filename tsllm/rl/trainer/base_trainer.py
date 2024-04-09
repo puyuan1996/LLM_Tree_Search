@@ -41,10 +41,13 @@ class BaseMCTSTrainer(ABC):
         self.tokenizer.padding_side = config.tokenizer.padding_side
         self.tokenizer.truncation_side = config.tokenizer.truncation_side
 
+        self.tokenizer.pad_token = self.tokenizer.eos_token  # TODO
+        # self.tokenizer.add_special_tokens({'pad_token': '[PAD]'})
+
         # FIXME: this may not be right and not general for all tokenizer.
-        if not self.tokenizer.pad_token:
-            self.tokenizer.pad_token = "<|padding|>"
-            self.tokenizer.pad_token_id = self.tokenizer.eos_token_id
+        # if not self.tokenizer.pad_token:
+        #     self.tokenizer.pad_token = "<|padding|>"
+        #     self.tokenizer.pad_token_id = self.tokenizer.eos_token_id
         self.tokenizer.sep_token = "<sep>"
 
     @abstractmethod

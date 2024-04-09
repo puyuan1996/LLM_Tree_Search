@@ -19,19 +19,68 @@ def extract_answer(completion):
     return match_str
 
 
-def extract_groundtruth(groundtruth_str: str):
-    x = groundtruth_str.split("#### ")[1].strip().replace(",", "")
-    try:
-        float(x)
-    except:
-        raise ValueError(
-            "Warning: Error should raise since the extracted groundtruth string {}\
-             cannot be converted to float".format(
-                x
-            )
-        )
-    return x
+# def extract_groundtruth(groundtruth_str: str):
+#     import pdb; pdb.set_trace()
+#     x = groundtruth_str.split("#### ")[1].strip().replace(",", "")
+#     print('x', x)
+#     try:
+#         float(x)
+#     except:
+#         raise ValueError(
+#             "Warning: Error should raise since the extracted groundtruth string {}\
+#              cannot be converted to float".format(
+#                 x
+#             )
+#         )
+#     return x
 
+def extract_groundtruth(groundtruth_list: list):
+    # Initialize an empty list to hold all the extracted numbers
+    extracted_numbers = []
+    
+    # Iterate over each element in the list
+    for groundtruth in groundtruth_list:
+        # Ensure that each element is a dictionary and has the 'text' key
+        if not isinstance(groundtruth, dict) or 'text' not in groundtruth:
+            raise ValueError("Each element in the list must be a dictionary with a 'text' key.")
+        
+        # Extract the 'text' value
+        text = groundtruth['text']
+        
+        # Look for the pattern "The answer is " and extract the number following it
+        answer_prefix = "The answer is "
+        start_index = text.find(answer_prefix)
+        if start_index == -1:
+            raise ValueError("The pattern 'The answer is ' was not found in the input string.")
+        
+        # Move the start index to the beginning of the number
+        start_index += len(answer_prefix)
+        
+        # Find the end of the number by looking for a space or end of the string
+        end_index = start_index
+        while end_index < len(text) and text[end_index].isdigit():
+            end_index += 1
+        
+        # Extract the number as a string
+        number_str = text[start_index:end_index]
+        
+        # Convert the extracted number to an integer
+        try:
+            number = int(number_str)
+        except ValueError:
+            raise ValueError(f"The extracted substring '{number_str}' could not be converted to an integer.")
+        
+        # Add the extracted number to the list
+        extracted_numbers.append(number)
+    
+    return extracted_numbers[0]
+
+# # Example usage:
+# groundtruth_str = [
+#     {'text': 'Natalia sold 48/2 = 24 clips in May.\nNatalia sold 48+24 = 72 clips altogether in April and May.\nThe answer is 72', 'correct': True}
+# ]
+# numbers = extract_groundtruth(groundtruth_str)
+# print("Extracted numbers:", numbers)
 
 def judge_correct(problem_str: str, extracted_groundtruth: Optional[str], answer: str):
     float_groundtruth = float(extracted_groundtruth)
