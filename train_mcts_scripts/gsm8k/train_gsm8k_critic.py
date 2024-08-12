@@ -6,10 +6,12 @@ replace_llama_attn_with_flash_attn()
 
 config = {
     "model": {
-        "model_path": "meta-llama/Llama-2-7b-hf",
+        # "model_path": "meta-llama/Llama-2-7b-hf",
+        "model_path": "/mnt/afs/niuyazhe/data/llama-2-7b-hf",
     },
     "tokenizer": {
-        "tokenizer_path": "meta-llama/Llama-2-7b-hf",
+        # "tokenizer_path": "meta-llama/Llama-2-7b-hf",
+        "tokenizer_path": "/mnt/afs/niuyazhe/data/llama-2-7b-hf",
         "padding_side": "right",
     },
     "optimizer": {
@@ -31,7 +33,7 @@ config = {
         "value_loss_coef": 1.0,
         "eval_interval": 1,
         "checkpoint_interval": 1,
-        "checkpoint_dir": tmp_for_check,
+        "checkpoint_dir": "tmp_for_check",
         "save_optimizer": False,
         "project_name": "tmp_for_check",
         "tracker": "tensorboard",

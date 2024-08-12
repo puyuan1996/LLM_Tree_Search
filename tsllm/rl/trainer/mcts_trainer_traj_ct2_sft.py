@@ -38,6 +38,8 @@ class AccelerateMCTSTrainer(BaseMCTSTrainer):
     def __init__(self, config, **kwargs):
         super().__init__(config, **kwargs)
 
+        # import pdb;pdb.set_trace()
+
         self.model = self.setup_model()
         # run in pure_bf16
         self.model = self.model.to(self.accelerator.device, torch.bfloat16)

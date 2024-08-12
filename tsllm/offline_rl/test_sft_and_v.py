@@ -423,6 +423,7 @@ if __name__ == "__main__":
                 o["value"] = v
 
         elif args.rollout_method == "mcts.rap":
+            # import pdb; pdb.set_trace()
             output_list = mcts.rap(
                 env,
                 args.num_mcts_aggregation,
